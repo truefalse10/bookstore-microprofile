@@ -1,12 +1,8 @@
-package com.airhacks.ping.boundary;
+package com.truefalse01;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-/**
- *
- * @author airhacks.com
- */
 @Path("ping")
 public class PingResource {
 
