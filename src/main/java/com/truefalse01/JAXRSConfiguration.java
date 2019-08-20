@@ -1,5 +1,7 @@
 package com.truefalse01;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -10,5 +12,20 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationPath("resources")
 public class JAXRSConfiguration extends Application {
+    @Inject
+    BookRepository bookRepository;
+
+    @PostConstruct
+    public void postConstruct() {
+        System.out.println("Application started!");
+
+        // init DB with some same books
+        if (bookRepository.count() == 0) {
+            bookRepository.add(new Book("Harry Potter and the philosophers stone", "J. K. Rowling"));
+            bookRepository.add(new Book("Conan", "Robert E. Howard"));
+            System.out.println("Added sample books!");
+        }
+
+    }
 
 }
