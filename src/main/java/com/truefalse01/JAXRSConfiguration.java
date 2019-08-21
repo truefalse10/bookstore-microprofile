@@ -12,6 +12,7 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationPath("resources")
 public class JAXRSConfiguration extends Application {
+
     @Inject
     BookRepository bookRepository;
 
@@ -21,8 +22,9 @@ public class JAXRSConfiguration extends Application {
 
         // init DB with some same books
         if (bookRepository.count() == 0) {
-            bookRepository.add(new Book("Harry Potter and the philosophers stone", "J. K. Rowling"));
-            bookRepository.add(new Book("Conan", "Robert E. Howard"));
+            bookRepository.create(new Book("Harry Potter and the philosophers stone", "J. K. Rowling"));
+            bookRepository.create(new Book("Lord of the rings", "J. R. R. Tolkien"));
+            bookRepository.create(new Book("Conan", "Robert E. Howard"));
             System.out.println("Added sample books!");
         }
 

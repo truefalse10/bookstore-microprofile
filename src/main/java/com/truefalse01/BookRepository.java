@@ -17,12 +17,8 @@ public class BookRepository {
         return query.getSingleResult();
     }
 
-    public Book exampleBook() {
-        return new Book("Lord of the rings", "J. R. R. Tolkien");
-    }
-
     @Transactional
-    public void add(Book book) {
+    public void create(Book book) {
         em.persist(book);
     }
 
@@ -30,4 +26,9 @@ public class BookRepository {
         TypedQuery query = em.createQuery("select b from Book b", Book.class);
         return query.getResultList();
     }
+
+    public Book findById(Long id) {
+        return em.find(Book.class, id);
+    }
+
 }
