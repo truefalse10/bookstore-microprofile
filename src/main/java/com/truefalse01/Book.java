@@ -1,7 +1,5 @@
 package com.truefalse01;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +7,6 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name="increment", strategy = "increment")
     public Long id;
 
     @Column
