@@ -1,6 +1,8 @@
 package com.truefalse01;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,11 +11,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
 @Path("/books")
+@RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 public class BookResource {
   @Inject
   BookRepository bookRepository;
+
+  @Inject
+  JsonWebToken token;
 
   @GET
   public List<Book> findAll() {
@@ -34,6 +42,7 @@ public class BookResource {
   }
 
   @POST
+  @RolesAllowed("hacker")
   public Book createBook(Book book) {
     bookRepository.create(book);
     return book;
