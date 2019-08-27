@@ -1,6 +1,9 @@
 package com.truefalse01;
 
+import org.eclipse.microprofile.auth.LoginConfig;
+
 import javax.annotation.PostConstruct;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -11,6 +14,8 @@ import javax.ws.rs.core.Application;
  *
  */
 @ApplicationPath("resources")
+@LoginConfig(authMethod = "MP-JWT")
+@DeclareRoles({"chief", "hacker"})
 public class JAXRSConfiguration extends Application {
 
     @Inject

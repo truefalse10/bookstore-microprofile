@@ -1,8 +1,20 @@
 # bookstore-microprofile
 > simple java-ee project that should evaluate oracle's [microprofile](https://microprofile.io/) specification together with the thinWar approach.
 
-**included microprofile libraries:**
+####included microprofile libraries:
 * [microprofile-config](https://microprofile.io/project/eclipse/microprofile-config)
+
+####persistence:
+for testing purposes this project uses an h2 database that is filled with dummy data on application start
+
+####api-endpoints:
+the app exposes the following endpoints
+```
+GET     /bookstore-microprofile/resources/ping
+GET     /bookstore-micropofile/resources/books
+POST    /bookstore-micropofile/resources/books
+GET     /bookstore-micropofile/resources/books/{id}
+```
 
 ## build docker container
 ```
