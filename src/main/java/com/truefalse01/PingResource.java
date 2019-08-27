@@ -13,19 +13,22 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 @RequestScoped
 public class PingResource {
 
-    @Inject
-    @ConfigProperty(name = "VERSION")
-    String VERSION;
+  @Inject
+  @ConfigProperty(name = "VERSION")
+  String version;
 
-    @Inject
-    JsonWebToken token;
+  @Inject
+  JsonWebToken token;
 
-    @GET
-    @RolesAllowed("hacker")
-    public String ping() {
-        // TODO: somehow getRawToken always returns null?!
-        System.out.println("****raw-token****:" + this.token.getRawToken());
-        return "groups: " + token.getGroups() + " token:" + token.getRawToken();
-    }
+  /**
+   * simple ping route to test jwt.
+   * @return ping answer
+   */
+  @GET
+  @RolesAllowed("hacker")
+  public String ping() {
+    System.out.println("****raw-token****:" + this.token.getRawToken());
+    return "groups: " + token.getGroups() + " token:" + token.getRawToken();
+  }
 
 }
