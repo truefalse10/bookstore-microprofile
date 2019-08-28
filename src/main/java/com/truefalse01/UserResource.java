@@ -1,8 +1,5 @@
 package com.truefalse01;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
@@ -39,25 +36,10 @@ public class UserResource {
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public String login(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
+  public String login(User user) throws Exception {
     if ("Dieter".equalsIgnoreCase(user.name) && "123Geheim".equals(user.password)) {
-      try {
-        byte[] decodedPrivateKey = Base64.getDecoder().decode(privateKeyString);
-        PrivateKey privateKey = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decodedPrivateKey));
-
-        byte[] decodedPublicKey = Base64.getDecoder().decode(publicKeyString);
-        PublicKey publicKey = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decodedPublicKey));
-
-
-        Algorithm algorithmRS = Algorithm.RSA256((RSAPublicKey) publicKey, (RSAPrivateKey) privateKey);
-        String token = JWT.create()
-          .withIssuer(issuer)
-          .withSubject(user.name)
-          .sign(algorithmRS);
+        String token = JWTGenerator.generateJWTString("jwt-token.json");
         return token;
-      } catch (JWTCreationException e) {
-        throw new NotAuthorizedException("creation of token failed", e);
-      }
     } else throw new NotAuthorizedException("User not authorized!");
   }
 
