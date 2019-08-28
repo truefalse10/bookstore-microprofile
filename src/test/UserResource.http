@@ -1,0 +1,10 @@
+POST http://localhost:8080/bookstore-microprofile/resources/user
+Content-Type: application/json
+
+{
+  "name": "Peter",
+  "password": "123Geheim"
+}
+
+###
+

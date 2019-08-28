@@ -19,6 +19,11 @@
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
+      <version>3.8.2</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>bookstore-microprofile</finalName>
