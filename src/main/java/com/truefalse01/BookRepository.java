@@ -22,7 +22,7 @@ public class BookRepository {
   }
 
   public List<Book> findAll() {
-    TypedQuery query = em.createQuery("select b from Book b", Book.class);
+    TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
     return query.getResultList();
   }
 
