@@ -1,19 +1,27 @@
 # bookstore-microprofile
 > simple java-ee project that should evaluate oracle's [microprofile](https://microprofile.io/) specification together with the thinWar approach.
 
-####included microprofile libraries:
+### included microprofile libraries:
 * [microprofile-config](https://microprofile.io/project/eclipse/microprofile-config)
+* [microprofile-jwt](https://microprofile.io/project/eclipse/microprofile-jwt-auth)
 
-####persistence:
+### persistence:
 for testing purposes this project uses an h2 database that is filled with dummy data on application start
 
-####api-endpoints:
+### authentication with jwt
+authentication is done via json-web-token ([JWT](https://jwt.io)). To retrieve the token the login route 
+expects `name` and `password` and returns the token. This token must be sent as `Authorization: Bearer <token>`
+header to access protected routes. The test credentials are `{ "name": "Dieter", "password": "123Geheim" }`
+
+### api-endpoints:
 the app exposes the following endpoints
 ```
 GET     /bookstore-microprofile/resources/ping
-GET     /bookstore-micropofile/resources/books
-POST    /bookstore-micropofile/resources/books
-GET     /bookstore-micropofile/resources/books/{id}
+GET     /bookstore-microprofile/resources/books
+POST    /bookstore-microprofile/resources/books
+GET     /bookstore-microprofile/resources/books/{id}
+
+POST    /bookstore-microprofile/resources/user // Login with body { name, password }
 ```
 
 ## build docker container

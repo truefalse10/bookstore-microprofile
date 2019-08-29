@@ -9,7 +9,6 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.SignedJWT;
 
-import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -17,10 +16,9 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonPatch;
 import javax.json.JsonWriter;
-import javax.json.stream.JsonParser;
 
 import org.eclipse.microprofile.jwt.Claims;
 
@@ -28,31 +26,29 @@ public class JwtGenerator {
   /**
    * creates token with predefined claims.
    *
-   * @param jsonResource location of default json payload
    * @return generated json token
    */
-  public static String generateJwtString(String jsonResource) throws Exception {
-    byte[] byteBuffer = new byte[16384];
-    currentThread()
-        .getContextClassLoader()
-        .getResource(jsonResource)
-        .openStream()
-        .read(byteBuffer);
-
-    JsonParser parser = Json.createParser(new ByteArrayInputStream(byteBuffer));
-    parser.next();
-    JsonObject jwtJson = parser.getObject();
-
+  public static String generateJwtString(User user, String issuer) throws Exception {
     long currentTimeInSecs = (System.currentTimeMillis() / 1000);
-    long expirationTime = currentTimeInSecs + 1000;
+    long expirationTime = currentTimeInSecs + 30 * 60; // expires in 30 min
 
-    JsonPatch patch = Json.createPatchBuilder()
-        .add("/" + Claims.iat.name(), Json.createValue(currentTimeInSecs))
-        .add("/" + Claims.auth_time.name(), Json.createValue(currentTimeInSecs))
-        .add("/" + Claims.exp.name(), Json.createValue(expirationTime))
+    // TODO: put groups in database and get from user
+    JsonArray groups = Json.createArrayBuilder()
+        .add("chief")
+        .add("hacker")
         .build();
 
-    jwtJson = patch.apply(jwtJson);
+    JsonObject jwtJson = Json.createObjectBuilder()
+        // user specific claims
+        .add(Claims.iss.name(), issuer)
+        .add(Claims.jti.name(), "42") // unique identifier for token TODO: make unique
+        .add(Claims.sub.name(), user.name)
+        .add(Claims.upn.name(), "duke") // user principal name in java.security.Principal
+        .add(Claims.groups.name(), groups)
+        // general claims
+        .add(Claims.iat.name(), Json.createValue(currentTimeInSecs)) // issue time
+        .add(Claims.exp.name(), Json.createValue(expirationTime)) // expiration time
+        .build();
 
     StringWriter stringWriter = new StringWriter();
     JsonWriter writer = Json.createWriter(stringWriter);

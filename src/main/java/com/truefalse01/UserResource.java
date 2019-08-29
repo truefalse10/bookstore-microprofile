@@ -12,19 +12,12 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @Path("/user")
 public class UserResource {
   @Inject
-  @ConfigProperty(name = "mp.jwt.verify.publickey")
-  String publicKeyString;
-
-  @Inject
-  @ConfigProperty(name = "mp.jwt.verify.privatekey")
-  String privateKeyString;
-
-  @Inject
   @ConfigProperty(name = "mp.jwt.verify.issuer")
   String issuer;
 
   /**
    * takes user and returns token if valid credentials.
+   * 
    * @param user User
    * @return
    */
@@ -32,7 +25,7 @@ public class UserResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public String login(User user) throws Exception {
     if ("Dieter".equalsIgnoreCase(user.name) && "123Geheim".equals(user.password)) {
-      String token = JwtGenerator.generateJwtString("jwt-token.json");
+      String token = JwtGenerator.generateJwtString(user, issuer);
       return token;
     } else {
       throw new NotAuthorizedException("User not authorized!");
