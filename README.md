@@ -8,7 +8,7 @@
 ### persistence:
 for testing purposes this project uses an h2 database that is filled with dummy data on application start
 
-### authentication with jwt
+### authentication with jwt:
 authentication is done via json-web-token ([JWT](https://jwt.io)). To retrieve the token the login route 
 expects `name` and `password` and returns the token. This token must be sent as `Authorization: Bearer <token>`
 header to access protected routes. The test credentials are `{ "name": "Dieter", "password": "123Geheim" }`

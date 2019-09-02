@@ -26,7 +26,7 @@ public class JwtGenerator {
   /**
    * creates token with predefined claims.
    *
-   * @return generated json token
+   * @return generated json token as string
    */
   public static String generateJwtString(User user, String issuer) throws Exception {
     long currentTimeInSecs = (System.currentTimeMillis() / 1000);
@@ -67,7 +67,7 @@ public class JwtGenerator {
    * reads private key from resources folder and returns as PrivateKey.
    *
    * @param resourceName filename
-   * @return
+   * @return PrivateKey
    */
   public static PrivateKey readPrivateKey(String resourceName) throws Exception {
     byte[] byteBuffer = new byte[16384];
