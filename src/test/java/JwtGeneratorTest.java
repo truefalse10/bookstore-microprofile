@@ -1,12 +1,11 @@
-import com.truefalse01.JwtGenerator;
-import com.truefalse01.User;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.truefalse01.JwtGenerator;
+import com.truefalse01.User;
+
 import java.security.PrivateKey;
+import org.junit.Test;
 
 public class JwtGeneratorTest {
 
