@@ -4,6 +4,7 @@
 ### included microprofile libraries:
 * [microprofile-config](https://microprofile.io/project/eclipse/microprofile-config)
 * [microprofile-jwt](https://microprofile.io/project/eclipse/microprofile-jwt-auth)
+* [microprofile-metrics](https://microprofile.io/project/eclipse/microprofile-metrics)
 
 ### persistence:
 for testing purposes this project uses an h2 database that is filled with dummy data on application start
@@ -16,6 +17,8 @@ header to access protected routes. The test credentials are `{ "name": "Dieter",
 ### api-endpoints:
 the app exposes the following endpoints
 ```
+GET     /metrics // payara metrics + microprofile-metrics
+GET     /openapi // api documentation
 GET     /bookstore-microprofile/resources/ping
 GET     /bookstore-microprofile/resources/books
 POST    /bookstore-microprofile/resources/books

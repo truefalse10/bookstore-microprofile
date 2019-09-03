@@ -1,6 +1,8 @@
 package com.truefalse01;
 
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -17,6 +19,8 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 public class BookResource {
+  private static final Logger log = Logger.getLogger(BookResource.class.getName());
+
   @Inject
   BookRepository bookRepository;
 
@@ -41,10 +45,16 @@ public class BookResource {
     return bookRepository.findById(id);
   }
 
+  /**
+   * create new book.
+   * 
+   * @return Book
+   */
   @POST
   @RolesAllowed("hacker")
   public Book createBook(Book book) {
     bookRepository.create(book);
+    log.info("New Book created: " + book);
     return book;
   }
 
