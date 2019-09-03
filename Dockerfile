@@ -1,2 +1,2 @@
-FROM airhacks/glassfish
-COPY ./target/bookstore-microprofile.war ${DEPLOYMENT_DIR}
+FROM payara/micro 
+COPY ./target/bookstore-microprofile.war ${DEPLOY_DIR}
