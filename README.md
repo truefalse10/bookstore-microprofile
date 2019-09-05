@@ -45,3 +45,9 @@ If you get errors executing make sure your `$M2_HOME` is set to the maven direct
 ```
 java -jar wad.jar $PAYARA_DIR/glassfish/domains/domain1/autodeploy
 ```
+
+## deploy to OpenShift
+there is script that builds the application image and pushes it to an openshift cluster (minishift in this case). For custom configuration change variables in `deployOpenshift.sh` and run:
+```
+./deployOpenshift.sh
+```
